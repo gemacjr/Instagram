@@ -12,6 +12,7 @@
 		748DF3311F2FB4B600D7801B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748DF32F1F2FB4B600D7801B /* Main.storyboard */; };
 		748DF3331F2FB4B600D7801B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748DF3321F2FB4B600D7801B /* Assets.xcassets */; };
 		748DF3361F2FB4B600D7801B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748DF3341F2FB4B600D7801B /* LaunchScreen.storyboard */; };
+		748DF33F1F2FF57100D7801B /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 748DF33D1F2FF51700D7801B /* Pacifico.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		748DF3321F2FB4B600D7801B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		748DF3351F2FB4B600D7801B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		748DF3371F2FB4B600D7801B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		748DF33D1F2FF51700D7801B /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		748DF32A1F2FB4B600D7801B /* Edstagram */ = {
 			isa = PBXGroup;
 			children = (
+				748DF33E1F2FF53D00D7801B /* Resources */,
 				748DF32B1F2FB4B600D7801B /* AppDelegate.swift */,
 				748DF32D1F2FB4B600D7801B /* ViewController.swift */,
 				748DF32F1F2FB4B600D7801B /* Main.storyboard */,
@@ -62,6 +65,14 @@
 				748DF3371F2FB4B600D7801B /* Info.plist */,
 			);
 			path = Edstagram;
+			sourceTree = "<group>";
+		};
+		748DF33E1F2FF53D00D7801B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				748DF33D1F2FF51700D7801B /* Pacifico.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +135,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				748DF33F1F2FF57100D7801B /* Pacifico.ttf in Resources */,
 				748DF3361F2FB4B600D7801B /* LaunchScreen.storyboard in Resources */,
 				748DF3331F2FB4B600D7801B /* Assets.xcassets in Resources */,
 				748DF3311F2FB4B600D7801B /* Main.storyboard in Resources */,
