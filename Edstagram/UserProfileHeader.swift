@@ -58,6 +58,7 @@ class UserProfileHeader: UICollectionViewCell {
             }
             
             }.resume()
+        //new
     }
     
     required init?(coder aDecoder: NSCoder) {
