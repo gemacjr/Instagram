@@ -45,5 +45,7 @@
 	<array>
 		<string>Pacifico.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We&apos;d like acces to your photos right now</string>
 </dict>
 </plist>
