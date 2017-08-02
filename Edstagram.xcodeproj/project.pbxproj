@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		743FC29F1F313A0700CD0813 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743FC29E1F313A0700CD0813 /* MainTabBarController.swift */; };
 		743FC2A11F313B3300CD0813 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743FC2A01F313B3300CD0813 /* UserProfileController.swift */; };
+		743FC2A41F317F5900CD0813 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743FC2A31F317F5900CD0813 /* UserProfileHeader.swift */; };
 		748DF32C1F2FB4B600D7801B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF32B1F2FB4B600D7801B /* AppDelegate.swift */; };
 		748DF32E1F2FB4B600D7801B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF32D1F2FB4B600D7801B /* ViewController.swift */; };
 		748DF3311F2FB4B600D7801B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748DF32F1F2FB4B600D7801B /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		69ED8D2AAF24C2DC72F2B953 /* Pods-Edstagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Edstagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Edstagram/Pods-Edstagram.release.xcconfig"; sourceTree = "<group>"; };
 		743FC29E1F313A0700CD0813 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		743FC2A01F313B3300CD0813 /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
+		743FC2A31F317F5900CD0813 /* UserProfileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
 		748DF3281F2FB4B600D7801B /* Edstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Edstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		748DF32B1F2FB4B600D7801B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		748DF32D1F2FB4B600D7801B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,6 +52,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		743FC2A21F317F2700CD0813 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				743FC2A01F313B3300CD0813 /* UserProfileController.swift */,
+				743FC2A31F317F5900CD0813 /* UserProfileHeader.swift */,
+			);
+			name = UserProfile;
+			sourceTree = "<group>";
+		};
+		743FC2A61F3185D700CD0813 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		748DF31F1F2FB4B600D7801B = {
 			isa = PBXGroup;
 			children = (
@@ -71,11 +89,12 @@
 		748DF32A1F2FB4B600D7801B /* Edstagram */ = {
 			isa = PBXGroup;
 			children = (
+				743FC2A61F3185D700CD0813 /* Model */,
+				743FC2A21F317F2700CD0813 /* UserProfile */,
 				748DF3401F30214F00D7801B /* Utils */,
 				748DF33E1F2FF53D00D7801B /* Resources */,
 				748DF32B1F2FB4B600D7801B /* AppDelegate.swift */,
 				743FC29E1F313A0700CD0813 /* MainTabBarController.swift */,
-				743FC2A01F313B3300CD0813 /* UserProfileController.swift */,
 				748DF32D1F2FB4B600D7801B /* ViewController.swift */,
 				748DF32F1F2FB4B600D7801B /* Main.storyboard */,
 				748DF3431F302C4C00D7801B /* GoogleService-Info.plist */,
@@ -248,6 +267,7 @@
 				748DF32E1F2FB4B600D7801B /* ViewController.swift in Sources */,
 				748DF3421F30216B00D7801B /* Extensions.swift in Sources */,
 				743FC29F1F313A0700CD0813 /* MainTabBarController.swift in Sources */,
+				743FC2A41F317F5900CD0813 /* UserProfileHeader.swift in Sources */,
 				743FC2A11F313B3300CD0813 /* UserProfileController.swift in Sources */,
 				748DF32C1F2FB4B600D7801B /* AppDelegate.swift in Sources */,
 			);
