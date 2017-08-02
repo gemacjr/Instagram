@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>274024997390-44q2lic2rnfqc6ln8118qjoe5sr2ibtd.apps.googleusercontent.com</string>
+	<string>744007461024-9ng7nqivrrjvovper28mntaemo18r33q.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.274024997390-44q2lic2rnfqc6ln8118qjoe5sr2ibtd</string>
+	<string>com.googleusercontent.apps.744007461024-9ng7nqivrrjvovper28mntaemo18r33q</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBPnk6tRY4T8SswDG61X8Glu0aYiRMmVw0</string>
+	<string>AIzaSyDkFMqSDeSpNmS0U59165x4Jw9SEAWg7xE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>274024997390</string>
+	<string>744007461024</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.swiftbeard.Edstagram</string>
 	<key>PROJECT_ID</key>
-	<string>edstagram-6bee7</string>
+	<string>edstagram-6336e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>edstagram-6bee7.appspot.com</string>
+	<string>edstagram-6336e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:274024997390:ios:835a800970e80be6</string>
+	<string>1:744007461024:ios:835a800970e80be6</string>
 	<key>DATABASE_URL</key>
-	<string>https://edstagram-6bee7.firebaseio.com</string>
+	<string>https://edstagram-6336e.firebaseio.com</string>
 </dict>
 </plist>

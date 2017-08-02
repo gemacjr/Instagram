@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SignUpController.swift
 //  Edstagram
 //
 //  Created by Ed McCormic on 7/31/17.
@@ -11,7 +11,7 @@ import Firebase
 import Pastel
 
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     
     
@@ -47,17 +47,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         dismiss(animated: true, completion: nil)
     }
-    
 
-    
-    let mylabel: UILabel = {
-        let label = UILabel()
-        label.text = "  Edstagram"
-        label.textColor = UIColor.white
-        label.font =  UIFont(name: "Pacifico", size: 60)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     let emailTextField: UITextField = {
         let tf = UITextField()
@@ -125,6 +115,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return button
     }()
     
+    let alreadyHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let attributedTitle = NSMutableAttributedString(string: "Already have an account? ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.lightGray])
+        
+        attributedTitle.append(NSAttributedString(string: "Sign In", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.rgb(red: 17, green: 154, blue: 237)]))
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.setTitle("Don't have an account? Sign Up.", for: .normal)
+        button.addTarget(self, action: #selector(handleAlreadyHaveAccount), for: .touchUpInside)
+        return button
+    }()
+    
+    func handleAlreadyHaveAccount() {
+        navigationController?.popViewController(animated: true)
+        
+        
+    }
+    
     func handleSignUp() {
         
         guard let email = emailTextField.text, email.characters.count > 0 else { return }
@@ -179,12 +188,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         backgroundGradientView()
         
+        view.addSubview(alreadyHaveAccountButton)
+        alreadyHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        
         view.addSubview(plusPhotoButton)
-        view.addSubview(mylabel)
         
-        mylabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: plusPhotoButton.topAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: -60, paddingRight: 40, width: 300, height: 130)
-        
-        plusPhotoButton.anchor(top: mylabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
+        plusPhotoButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
         
         plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
@@ -208,7 +217,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         
         
-        stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: -40, width: 0, height: 200)
+        stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
     }
     
     func backgroundGradientView() {

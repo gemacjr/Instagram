@@ -10,14 +10,15 @@
 		743FC29F1F313A0700CD0813 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743FC29E1F313A0700CD0813 /* MainTabBarController.swift */; };
 		743FC2A11F313B3300CD0813 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743FC2A01F313B3300CD0813 /* UserProfileController.swift */; };
 		743FC2A41F317F5900CD0813 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743FC2A31F317F5900CD0813 /* UserProfileHeader.swift */; };
+		745BA0E11F324F3400183D3B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 745BA0E01F324F3400183D3B /* GoogleService-Info.plist */; };
+		745BA0E41F32538100183D3B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745BA0E31F32538100183D3B /* LoginController.swift */; };
 		748DF32C1F2FB4B600D7801B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF32B1F2FB4B600D7801B /* AppDelegate.swift */; };
-		748DF32E1F2FB4B600D7801B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF32D1F2FB4B600D7801B /* ViewController.swift */; };
+		748DF32E1F2FB4B600D7801B /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF32D1F2FB4B600D7801B /* SignUpController.swift */; };
 		748DF3311F2FB4B600D7801B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748DF32F1F2FB4B600D7801B /* Main.storyboard */; };
 		748DF3331F2FB4B600D7801B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 748DF3321F2FB4B600D7801B /* Assets.xcassets */; };
 		748DF3361F2FB4B600D7801B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 748DF3341F2FB4B600D7801B /* LaunchScreen.storyboard */; };
 		748DF33F1F2FF57100D7801B /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 748DF33D1F2FF51700D7801B /* Pacifico.ttf */; };
 		748DF3421F30216B00D7801B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DF3411F30216B00D7801B /* Extensions.swift */; };
-		748DF3441F302C4C00D7801B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 748DF3431F302C4C00D7801B /* GoogleService-Info.plist */; };
 		F8DBBCDC7F034A79F606A9A8 /* Pods_Edstagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E59D4FA78E5C36BE0D95B84 /* Pods_Edstagram.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,16 +28,17 @@
 		743FC29E1F313A0700CD0813 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		743FC2A01F313B3300CD0813 /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		743FC2A31F317F5900CD0813 /* UserProfileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		745BA0E01F324F3400183D3B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		745BA0E31F32538100183D3B /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		748DF3281F2FB4B600D7801B /* Edstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Edstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		748DF32B1F2FB4B600D7801B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		748DF32D1F2FB4B600D7801B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		748DF32D1F2FB4B600D7801B /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		748DF3301F2FB4B600D7801B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		748DF3321F2FB4B600D7801B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		748DF3351F2FB4B600D7801B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		748DF3371F2FB4B600D7801B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		748DF33D1F2FF51700D7801B /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
 		748DF3411F30216B00D7801B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		748DF3431F302C4C00D7801B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DFAAA397A572F97310EE810E /* Pods-Edstagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Edstagram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Edstagram/Pods-Edstagram.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +70,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		745BA0E21F32536B00183D3B /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				745BA0E31F32538100183D3B /* LoginController.swift */,
+				748DF32D1F2FB4B600D7801B /* SignUpController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		748DF31F1F2FB4B600D7801B = {
 			isa = PBXGroup;
 			children = (
@@ -89,15 +100,15 @@
 		748DF32A1F2FB4B600D7801B /* Edstagram */ = {
 			isa = PBXGroup;
 			children = (
+				745BA0E21F32536B00183D3B /* Login */,
 				743FC2A61F3185D700CD0813 /* Model */,
 				743FC2A21F317F2700CD0813 /* UserProfile */,
 				748DF3401F30214F00D7801B /* Utils */,
 				748DF33E1F2FF53D00D7801B /* Resources */,
 				748DF32B1F2FB4B600D7801B /* AppDelegate.swift */,
+				745BA0E01F324F3400183D3B /* GoogleService-Info.plist */,
 				743FC29E1F313A0700CD0813 /* MainTabBarController.swift */,
-				748DF32D1F2FB4B600D7801B /* ViewController.swift */,
 				748DF32F1F2FB4B600D7801B /* Main.storyboard */,
-				748DF3431F302C4C00D7801B /* GoogleService-Info.plist */,
 				748DF3321F2FB4B600D7801B /* Assets.xcassets */,
 				748DF3341F2FB4B600D7801B /* LaunchScreen.storyboard */,
 				748DF3371F2FB4B600D7801B /* Info.plist */,
@@ -203,7 +214,7 @@
 			files = (
 				748DF33F1F2FF57100D7801B /* Pacifico.ttf in Resources */,
 				748DF3361F2FB4B600D7801B /* LaunchScreen.storyboard in Resources */,
-				748DF3441F302C4C00D7801B /* GoogleService-Info.plist in Resources */,
+				745BA0E11F324F3400183D3B /* GoogleService-Info.plist in Resources */,
 				748DF3331F2FB4B600D7801B /* Assets.xcassets in Resources */,
 				748DF3311F2FB4B600D7801B /* Main.storyboard in Resources */,
 			);
@@ -264,12 +275,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				748DF32E1F2FB4B600D7801B /* ViewController.swift in Sources */,
+				748DF32E1F2FB4B600D7801B /* SignUpController.swift in Sources */,
 				748DF3421F30216B00D7801B /* Extensions.swift in Sources */,
 				743FC29F1F313A0700CD0813 /* MainTabBarController.swift in Sources */,
 				743FC2A41F317F5900CD0813 /* UserProfileHeader.swift in Sources */,
 				743FC2A11F313B3300CD0813 /* UserProfileController.swift in Sources */,
 				748DF32C1F2FB4B600D7801B /* AppDelegate.swift in Sources */,
+				745BA0E41F32538100183D3B /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
