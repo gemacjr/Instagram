@@ -138,7 +138,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         
         guard let email = emailTextField.text, email.characters.count > 0 else { return }
         guard let username = usernameTextField.text, username.characters.count > 6 else { return }
-        guard let password = passwordTextField.text, password.characters.count > 7 else { return }
+        guard let password = passwordTextField.text, password.characters.count > 0 else { return }
         
         Firebase.Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let err = error {
@@ -177,6 +177,12 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
                 }
                 
                 print("Successfully saved user:", user?.uid ?? "")
+                
+                guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+                
+                mainTabBarController.setupViewControllers()
+                
+                self.dismiss(animated: true, completion: nil)
             })
                 
         })

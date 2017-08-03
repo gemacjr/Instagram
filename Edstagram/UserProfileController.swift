@@ -23,9 +23,64 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
         
         setupLogOutButton()
+        
+        //fetchPosts()
+        
+        fetchOrderedPosts()
+    }
+    
+    var posts = [Post]()
+    
+    fileprivate func fetchOrderedPosts() {
+        guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
+        
+        let ref = Database.database().reference().child("posts").child(uid)
+        
+        ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
+            print(snapshot.key, snapshot.value ?? "")
+            
+            
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            
+            let post = Post(dictionary: dictionary)
+            
+            self.posts.append(post)
+            
+            self.collectionView?.reloadData()
+        }) { (err) in
+           print("Failed to fetch ordered posts:", err)
+        }
+        
+        
+    }
+    
+    fileprivate func fetchPosts() {
+        guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
+        
+        let ref = Database.database().reference().child("posts").child(uid)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value ?? "")
+            
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            dictionaries.forEach({ (key, value) in
+                print("Key \(key), Value: \(value)")
+                
+                
+                guard let dictionary = value as? [String: Any] else { return }
+                
+                let post = Post(dictionary: dictionary)
+                self.posts.append(post)
+            })
+            
+            self.collectionView?.reloadData()
+            
+        }) { (err) in
+            print("Failed to fetch posts:", err)
+        }
     }
     
     fileprivate func setupLogOutButton() {
@@ -35,32 +90,36 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     func handleLogOut() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        alertController.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { (_) in
-            
+        alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
             
             do {
                 try Firebase.Auth.auth().signOut()
                 
+                //what happens? we need to present some kind of login controller
+                let loginController = LoginController()
+                let navController = UINavigationController(rootViewController: loginController)
+                self.present(navController, animated: true, completion: nil)
                 
             } catch let signOutErr {
                 print("Failed to sign out:", signOutErr)
             }
             
+            
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        present(alertController, animated:  true, completion:  nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserProfilePhotoCell
         
-        cell.backgroundColor = .purple
+        cell.post = posts[indexPath.item]
         
         return cell
     }

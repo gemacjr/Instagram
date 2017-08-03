@@ -7,10 +7,9 @@
 //
 
 import UIKit
+import Firebase
+
 class LoginController: UIViewController {
-    
-    
-    
     
     let logoContainerView: UIView = {
         let view = UIView()
@@ -34,10 +33,10 @@ class LoginController: UIViewController {
                                                       attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
-        tf.textColor = UIColor.white
+        tf.textColor = UIColor.black
         tf.font = UIFont.systemFont(ofSize: 14)
         
-        //tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
     
@@ -49,25 +48,47 @@ class LoginController: UIViewController {
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
-        tf.textColor = UIColor.white
-        //tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.textColor = UIColor.black
+        tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return tf
     }()
     
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Sign Up", for: .normal)
+        button.setTitle("Login", for: .normal)
         button.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
         
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
         
-        //button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         
         button.isEnabled = false
         return button
     }()
+    
+    func handleLogin() {
+        
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Firebase.Auth.auth().signIn(withEmail: email, password: password) { (user, err) in
+            
+            if let err = err {
+                print("Failed to sign in with email:", err)
+                return
+            }
+            
+            print("Successfully logged back in with user:", user?.uid ?? "")
+            
+            guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+            
+            mainTabBarController.setupViewControllers()
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     
     let signUpButton: UIButton = {
         let button = UIButton(type: .system)
@@ -81,6 +102,19 @@ class LoginController: UIViewController {
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return button
     }()
+    
+    func handleTextInputChange() {
+        
+        let isFormValid = emailTextField.text?.characters.count ?? 0 > 0 && passwordTextField.text?.characters.count ?? 0 > 0
+        
+        if isFormValid {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+        } else {
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+        }
+    }
     
    
     
