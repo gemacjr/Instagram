@@ -10,76 +10,45 @@ import UIKit
 import Firebase
 
 class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
     let cellId = "cellId"
+    
+    var userId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView?.backgroundColor = .white
-        
-        navigationItem.title = Firebase.Auth.auth().currentUser?.uid
-        
-        fetchUser()
-        
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
-        
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
         
         setupLogOutButton()
         
-        //fetchPosts()
-        
-        fetchOrderedPosts()
+        fetchUser()
+        //fetchOrderedPosts()
     }
     
     var posts = [Post]()
     
     fileprivate func fetchOrderedPosts() {
-        guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
-        
+        guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("posts").child(uid)
         
+        //perhaps later on we'll implement some pagination of data
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
-            print(snapshot.key, snapshot.value ?? "")
-            
-            
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             
-            let post = Post(dictionary: dictionary)
+            guard let user = self.user else { return }
             
-            self.posts.append(post)
+            let post = Post(user: user, dictionary: dictionary)
             
-            self.collectionView?.reloadData()
-        }) { (err) in
-           print("Failed to fetch ordered posts:", err)
-        }
-        
-        
-    }
-    
-    fileprivate func fetchPosts() {
-        guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
-        
-        let ref = Database.database().reference().child("posts").child(uid)
-        
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value ?? "")
-            
-            guard let dictionaries = snapshot.value as? [String: Any] else { return }
-            dictionaries.forEach({ (key, value) in
-                print("Key \(key), Value: \(value)")
-                
-                
-                guard let dictionary = value as? [String: Any] else { return }
-                
-                let post = Post(dictionary: dictionary)
-                self.posts.append(post)
-            })
+            self.posts.insert(post, at: 0)
+            //            self.posts.append(post)
             
             self.collectionView?.reloadData()
             
         }) { (err) in
-            print("Failed to fetch posts:", err)
+            print("Failed to fetch ordered posts:", err)
         }
     }
     
@@ -117,6 +86,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserProfilePhotoCell
         
         cell.post = posts[indexPath.item]
@@ -142,6 +112,9 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
         header.user = self.user
         
+        //not correct
+        //header.addSubview(UIImageView())
+        
         return header
     }
     
@@ -151,33 +124,23 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     var user: User?
     fileprivate func fetchUser() {
-        guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value ?? "")
-            
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
-            self.user = User(dictionary: dictionary)
+        let uid = userId ?? (Firebase.Auth.auth().currentUser?.uid ?? "")
+        
+        //guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+        
+        Database.fetchUserWithUID(uid: uid) { (user) in
+            self.user = user
             self.navigationItem.title = self.user?.username
             
             self.collectionView?.reloadData()
             
-        }) { (err) in
-            print("Failed to fetch user:", err)
+            self.fetchOrderedPosts()
         }
     }
 }
 
-struct User {
-    let username: String
-    let profileImageUrl: String
-    
-    init(dictionary: [String: Any]) {
-        self.username = dictionary["username"] as? String ?? ""
-        self.profileImageUrl = dictionary["profileImageUrl"]  as? String ?? ""
-    }
-}
+
 
 
 
