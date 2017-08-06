@@ -9,6 +9,7 @@
 import UIKit
 class PhotoSelectorCell: UICollectionViewCell {
     
+    
     let photoImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -16,6 +17,8 @@ class PhotoSelectorCell: UICollectionViewCell {
         iv.backgroundColor = .lightGray
         return iv
     }()
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,10 +28,8 @@ class PhotoSelectorCell: UICollectionViewCell {
         
     }
     
-    
-    
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }

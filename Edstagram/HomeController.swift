@@ -17,15 +17,39 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateFeed), name: SharePhotoController.updateFeedNotification, object: nil)
         collectionView?.backgroundColor = .white
         
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: cellId)
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        
+        collectionView?.refreshControl = refreshControl
+        
         setupNavigationItems()
         
+        
+        fetchAllPosts()
+        
+    }
+    
+    func handleUpdateFeed() {
+        handleRefresh()
+    }
+    
+    func handleRefresh() {
+        
+        posts.removeAll()
+        fetchAllPosts()
+    }
+    
+    fileprivate func fetchAllPosts() {
         fetchPosts()
         fetchFollowingUserIds()
     }
+   
     
     fileprivate func fetchFollowingUserIds() {
         guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
@@ -51,11 +75,16 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.fetchPostsWithUser(user: user)
         }
+        
+        
     }
     
     fileprivate func fetchPostsWithUser(user: User) {
         let ref = Database.database().reference().child("posts").child(user.uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            self.collectionView?.refreshControl?.endRefreshing()
+            
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
             
             dictionaries.forEach({ (key, value) in
@@ -79,6 +108,14 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func setupNavigationItems() {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "camera3").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleCamera))
+    }
+    
+    func handleCamera() {
+        
+        let cameraController = CameraController()
+        present(cameraController, animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

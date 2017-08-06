@@ -32,6 +32,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     fileprivate func fetchOrderedPosts() {
         guard let uid = self.user?.uid else { return }
+        
+        print("FetchedOrderPost uid \(uid)")
         let ref = Database.database().reference().child("posts").child(uid)
         
         //perhaps later on we'll implement some pagination of data
@@ -125,7 +127,9 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var user: User?
     fileprivate func fetchUser() {
         
-        let uid = userId ?? (Firebase.Auth.auth().currentUser?.uid ?? "")
+        let uid = userId ?? Firebase.Auth.auth().currentUser?.uid ?? ""
+        
+        print("Fetch Users \(uid)")
         
         //guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
         

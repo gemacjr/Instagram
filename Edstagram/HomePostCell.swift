@@ -28,6 +28,7 @@ class HomePostCell: UICollectionViewCell {
             //            captionLabel.text = post?.caption
             
             setupAttributedCaption()
+            
         }
     }
     

@@ -39,30 +39,24 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
     var images = [UIImage]()
     var assets = [PHAsset]()
     
-    fileprivate func assetFetchOptions() -> PHFetchOptions {
+    fileprivate func assetsFetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
-        fetchOptions.fetchLimit = 15
+        fetchOptions.fetchLimit = 30
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchOptions.sortDescriptors = [sortDescriptor]
         return fetchOptions
     }
     
     fileprivate func fetchPhotos() {
-        
-        let allPhotos = PHAsset.fetchAssets(with: .image, options: assetFetchOptions())
-        
+        let allPhotos = PHAsset.fetchAssets(with: .image, options: assetsFetchOptions())
         
         DispatchQueue.global(qos: .background).async {
-            
             allPhotos.enumerateObjects({ (asset, count, stop) in
-                print(asset)
-                
                 let imageManager = PHImageManager.default()
                 let targetSize = CGSize(width: 200, height: 200)
                 let options = PHImageRequestOptions()
                 options.isSynchronous = true
                 imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
-                    
                     
                     if let image = image {
                         self.images.append(image)
@@ -74,19 +68,15 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
                     }
                     
                     if count == allPhotos.count - 1 {
-                        
                         DispatchQueue.main.async {
                             self.collectionView?.reloadData()
                         }
-                        
                     }
                     
-                    
                 })
+                
             })
         }
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -94,11 +84,9 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
         let width = view.frame.width
         return CGSize(width: width, height: width)
     }
-    
     
     var header: PhotoSelectorHeader?
     
@@ -110,19 +98,19 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
         header.photoImageView.image = selectedImage
         
         if let selectedImage = selectedImage {
-            if let index = self.images.index(of: selectedImage){
-               let selectedAsset = self.assets[index]
+            if let index = self.images.index(of: selectedImage) {
+                let selectedAsset = self.assets[index]
                 
-                let imagemanager = PHImageManager.default()
+                let imageManager = PHImageManager.default()
                 let targetSize = CGSize(width: 600, height: 600)
-                imagemanager.requestImage(for: selectedAsset, targetSize: targetSize, contentMode: .default, options: nil, resultHandler: { (image, info) in
+                imageManager.requestImage(for: selectedAsset, targetSize: targetSize, contentMode: .default, options: nil, resultHandler: { (image, info) in
+                    
                     header.photoImageView.image = image
+                    
                 })
+                
             }
         }
-        
-        
-        
         
         return header
     }
@@ -136,7 +124,6 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let width = (view.frame.width - 3) / 4
         return CGSize(width: width, height: width)
     }
@@ -146,7 +133,6 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoSelectorCell
         
         cell.photoImageView.image = images[indexPath.item]
@@ -160,7 +146,6 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
     
     fileprivate func setupNavigationButtons() {
         navigationController?.navigationBar.tintColor = .black
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNext))
@@ -170,7 +155,6 @@ class PhotoSelectorController: UICollectionViewController, UICollectionViewDeleg
         let sharePhotoController = SharePhotoController()
         sharePhotoController.selectedImage = header?.photoImageView.image
         navigationController?.pushViewController(sharePhotoController, animated: true)
-        
     }
     
     func handleCancel() {
