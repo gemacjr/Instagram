@@ -11,7 +11,7 @@ import Firebase
 
 
 
-class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout, HomePostCellDelegate {
     
     let cellId = "cellId"
     
@@ -19,20 +19,18 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateFeed), name: SharePhotoController.updateFeedNotification, object: nil)
+        
         collectionView?.backgroundColor = .white
         
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: cellId)
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
-        
         collectionView?.refreshControl = refreshControl
         
         setupNavigationItems()
         
-        
         fetchAllPosts()
-        
     }
     
     func handleUpdateFeed() {
@@ -40,7 +38,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func handleRefresh() {
-        
+        print("Handling refresh..")
         posts.removeAll()
         fetchAllPosts()
     }
@@ -49,7 +47,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         fetchPosts()
         fetchFollowingUserIds()
     }
-   
     
     fileprivate func fetchFollowingUserIds() {
         guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
@@ -68,6 +65,9 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
+    //iOS9
+    //let refreshControl = UIRefreshControl()
+    
     var posts = [Post]()
     fileprivate func fetchPosts() {
         guard let uid = Firebase.Auth.auth().currentUser?.uid else { return }
@@ -75,8 +75,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.fetchPostsWithUser(user: user)
         }
-        
-        
     }
     
     fileprivate func fetchPostsWithUser(user: User) {
@@ -90,7 +88,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
             dictionaries.forEach({ (key, value) in
                 guard let dictionary = value as? [String: Any] else { return }
                 
-                let post = Post(user: user, dictionary: dictionary)
+                var post = Post(user: user, dictionary: dictionary)
+                post.id = key
                 
                 self.posts.append(post)
             })
@@ -113,6 +112,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func handleCamera() {
+        print("Showing camera")
         
         let cameraController = CameraController()
         present(cameraController, animated: true, completion: nil)
@@ -138,7 +138,17 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         cell.post = posts[indexPath.item]
         
+        cell.delegate = self
+        
         return cell
+    }
+    
+    func didTapComment(post: Post) {
+        print("Message coming from HomeController")
+        print(post.caption)
+        let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
+        commentsController.post = post
+        navigationController?.pushViewController(commentsController, animated: true)
     }
     
 }
