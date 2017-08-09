@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout, USerProfileHeaderDelegate {
+class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserProfileHeaderDelegate {
     
     let cellId = "cellId"
     let homePostCellId = "homePostCellId"
@@ -34,7 +34,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.backgroundColor = .white
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
-        
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: homePostCellId)
         
         setupLogOutButton()
@@ -43,35 +42,41 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         //fetchOrderedPosts()
     }
     
-    var posts = [Post]()
     var isFinishedPaging = false
+    var posts = [Post]()
     
     fileprivate func paginatePosts() {
+        print("Start paging for more posts")
         
         guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("posts").child(uid)
         
+        //        let value = "-Kh0B6AleC8OgIF-mZNT"
+        //        let query = ref.queryOrderedByKey().queryStarting(atValue: value).queryLimited(toFirst: 6)
         
+        //        var query = ref.queryOrderedByKey()
         
-        var query = ref.queryOrderedByKey()
+        var query = ref.queryOrdered(byChild: "creationDate")
         
         if posts.count > 0 {
-            let value = posts.last?.id
-            query = query.queryStarting(atValue: value)
+            //            let value = posts.last?.id
+            let value = posts.last?.creationDate.timeIntervalSince1970
+            query = query.queryEnding(atValue: value)
         }
         
-        query.queryLimited(toFirst: 4).observeSingleEvent(of: .value, with: { (snapshot) in
+        query.queryLimited(toLast: 4).observeSingleEvent(of: .value, with: { (snapshot) in
             
             guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+            
+            //allObjects.reverse()
             
             if allObjects.count < 4 {
                 self.isFinishedPaging = true
             }
             
-            if self.posts.count > 0 {
+            if self.posts.count > 0 && allObjects.count > 0 {
                 allObjects.removeFirst()
             }
-            
             
             guard let user = self.user else { return }
             
@@ -79,31 +84,29 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
                 
                 guard let dictionary = snapshot.value as? [String: Any] else { return }
                 var post = Post(user: user, dictionary: dictionary)
-                
                 post.id = snapshot.key
                 
                 self.posts.append(post)
                 
-                print(snapshot.key)
-                
+                //                print(snapshot.key)
             })
             
             self.posts.forEach({ (post) in
-                
+                print(post.id ?? "")
             })
             
             self.collectionView?.reloadData()
             
+            
         }) { (err) in
-            print("Failed to paginate", err)
+            print("Failed to paginate for posts:", err)
         }
     }
     
-    
+
+
     fileprivate func fetchOrderedPosts() {
         guard let uid = self.user?.uid else { return }
-        
-        print("FetchedOrderPost uid \(uid)")
         let ref = Database.database().reference().child("posts").child(uid)
         
         //perhaps later on we'll implement some pagination of data
@@ -118,8 +121,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
             //            self.posts.append(post)
             
             self.collectionView?.reloadData()
-            
-            self.paginatePosts()
             
         }) { (err) in
             print("Failed to fetch ordered posts:", err)
@@ -161,25 +162,21 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        // Fire paginate call
-        if indexPath.item == self.posts.count - 1  && !isFinishedPaging {
+        // show you how to fire off the paginate call
+        if indexPath.item == self.posts.count - 1 && !isFinishedPaging {
+            print("Paginating for posts")
             paginatePosts()
         }
         
         if isGridView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserProfilePhotoCell
-            
             cell.post = posts[indexPath.item]
-            
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homePostCellId, for: indexPath) as! HomePostCell
-            
             cell.post = posts[indexPath.item]
-            
             return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -195,15 +192,15 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         if isGridView {
             let width = (view.frame.width - 2) / 3
             return CGSize(width: width, height: width)
-        }else {
+        } else {
             
-            var height: CGFloat = 40 + 8 + 8
+            var height: CGFloat = 40 + 8 + 8 //username userprofileimageview
             height += view.frame.width
             height += 50
             height += 60
+            
             return CGSize(width: view.frame.width, height: height)
         }
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -221,6 +218,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 200)
     }
+
     
     var user: User?
     fileprivate func fetchUser() {

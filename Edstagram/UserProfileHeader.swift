@@ -9,14 +9,14 @@
 import UIKit
 import Firebase
 
-protocol USerProfileHeaderDelegate {
+protocol UserProfileHeaderDelegate {
     func didChangeToListView()
     func didChangeToGridView()
 }
 
 class UserProfileHeader: UICollectionViewCell {
     
-    var delegate: USerProfileHeaderDelegate?
+    var delegate: UserProfileHeaderDelegate?
     
     var user: User? {
         didSet {
@@ -108,7 +108,7 @@ class UserProfileHeader: UICollectionViewCell {
         return iv
     }()
     
-    let gridButton: UIButton = {
+    lazy var gridButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
         button.addTarget(self, action: #selector(handleChangeToGridView), for: .touchUpInside)
@@ -116,8 +116,9 @@ class UserProfileHeader: UICollectionViewCell {
     }()
     
     func handleChangeToGridView() {
-        listButton.tintColor = UIColor(white: 0, alpha: 0.5)
+        print("Changing to grid view")
         gridButton.tintColor = .mainBlue()
+        listButton.tintColor = UIColor(white: 0, alpha: 0.2)
         delegate?.didChangeToGridView()
     }
     
@@ -130,10 +131,10 @@ class UserProfileHeader: UICollectionViewCell {
     }()
     
     func handleChangeToListView() {
+        print("Changing to list view")
         listButton.tintColor = .mainBlue()
-        gridButton.tintColor = UIColor(white: 0, alpha: 0.5)
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
         delegate?.didChangeToListView()
-        
     }
     
     let bookmarkButton: UIButton = {
